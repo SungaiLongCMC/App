@@ -42,11 +42,11 @@ class NavigationDrawerWidget extends StatelessWidget {
       InkWell(
         onTap: onClicked,
         child: Container(
-          padding: padding.add(EdgeInsets.symmetric(vertical: 40)),
+          padding: padding.add(EdgeInsets.symmetric(vertical: 20)),
           child: Row(
             children: [
               CircleAvatar(
-                radius: 30,
+                radius: 20,
                 backgroundImage: NetworkImage(urlImage),
               ),
               SizedBox(
@@ -55,13 +55,13 @@ class NavigationDrawerWidget extends StatelessWidget {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(name,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 15,
                       color: Colors.white,
                     )),
                 const SizedBox(height: 4),
                 Text(church,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 11,
                       color: Colors.white,
                     )),
               ])
@@ -74,7 +74,7 @@ class NavigationDrawerWidget extends StatelessWidget {
     required String text,
     required IconData icon,
   }) {
-    final color = Colors.white;
+    const color = Colors.white;
     return ListTile(
       leading: Icon(
         icon,
