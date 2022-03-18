@@ -14,7 +14,7 @@ ThemeData lightThemeData(BuildContext context) {
       centerTitle: false,
       //elevation: 0,
       backgroundColor: kBackgroundColorLightTheme,
-      titleTextStyle: TextStyle(color: Colors.black),
+      titleTextStyle: const TextStyle(color: Colors.black),
       iconTheme: IconThemeData(color: kPrimaryColor),
     ),
     iconTheme: IconThemeData(color: kContentColorLightTheme),

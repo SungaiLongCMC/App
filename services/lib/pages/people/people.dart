@@ -5,23 +5,23 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:services/config/constant.dart';
 import 'package:services/widgets/simple_indicator.dart';
 
-class SongScreen extends StatefulWidget {
-  SongScreen({Key? key}) : super(key: key);
+class PeopleScreen extends StatefulWidget {
+  PeopleScreen({Key? key}) : super(key: key);
 
   @override
-  State<SongScreen> createState() => _SongScreenState();
+  State<PeopleScreen> createState() => _PeopleScreenState();
 }
 
-class _SongScreenState extends State<SongScreen> {
+class _PeopleScreenState extends State<PeopleScreen> {
   bool boolSortBy = true;
   bool boolSortDirection = true;
   bool boolView = false;
   final GlobalKey _menuKey = GlobalKey();
 
-  List data = ["ABC", "DEF", "GHI"];
+  List data = ["ABC", "DEF", "GHI", "WCC", "John"];
 
   Future loadList() async {
-    final data = ["ABC", "DEF", "ASFAsf", "FTT", "218fds8"];
+    final data = ["ABC", "DEF", "ASFAsf", "QCC", "218fds8"];
     setState(() => this.data = data);
   }
 
@@ -83,7 +83,7 @@ class _SongScreenState extends State<SongScreen> {
                                   BorderSide(color: Colors.grey.shade300)),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Padding(
                               padding: const EdgeInsets.all(15),
@@ -91,6 +91,19 @@ class _SongScreenState extends State<SongScreen> {
                                   ? "$resultNumber Results"
                                   : "$resultNumber Result"),
                             ),
+                            Flexible(
+                              child: Container(),
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Icon(
+                                    Icons.email_outlined,
+                                    size: 20,
+                                    color: kPrimaryColor,
+                                  ),
+                                )),
                             Padding(
                               padding: const EdgeInsets.all(8),
                               child: PopupMenuButton(
@@ -115,12 +128,12 @@ class _SongScreenState extends State<SongScreen> {
                                         value: 1,
                                         checked: boolSortBy,
                                         child: itemMenu(
-                                            text: "Title",
+                                            text: "First Name",
                                             selected: boolSortBy)),
                                     PopupMenuItem<int>(
                                         value: 2,
                                         child: itemMenu(
-                                            text: "Last Scheduled",
+                                            text: "Last Name",
                                             selected: !boolSortBy)),
                                     const PopupMenuItem<int>(
                                         enabled: false,
@@ -130,22 +143,13 @@ class _SongScreenState extends State<SongScreen> {
                                     PopupMenuItem<int>(
                                         value: 3,
                                         child: itemMenu(
-                                            text: "Ascending",
+                                            text: "A-Z",
                                             selected: boolSortDirection)),
                                     PopupMenuItem<int>(
                                         value: 4,
                                         child: itemMenu(
-                                            text: "Descending",
+                                            text: "Z-A",
                                             selected: !boolSortDirection)),
-                                    const PopupMenuItem<int>(
-                                        enabled: false,
-                                        child: itemMenu(
-                                            text: "VIEW", selected: false)),
-                                    PopupMenuItem<int>(
-                                        value: 5,
-                                        child: itemMenu(
-                                            text: "Last Scheduled Date",
-                                            selected: boolView)),
                                   ];
                                 },
                                 onSelected: (value) {

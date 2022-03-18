@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:services/pages/profile/profile.dart';
 
 class NavigationDrawerWidget extends StatelessWidget {
-  final padding = EdgeInsets.symmetric(horizontal: 20);
+  final padding = const EdgeInsets.symmetric(horizontal: 20);
+
+  NavigationDrawerWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final name = 'SLCMC 2';
-    final church = 'Sungai Long Chinese Methodist Church';
-    final urlImage =
+    const name = 'SLCMC 2';
+    const church = 'Sungai Long Chinese Methodist Church';
+    const urlImage =
         'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50';
     return Drawer(
       child: Container(
@@ -22,12 +24,12 @@ class NavigationDrawerWidget extends StatelessWidget {
                       builder: (context) => ProfileScreen(),
                     ))),
             //const SizedBox(height: 48),
-            Divider(color: Colors.grey),
+            const Divider(color: Colors.grey),
             buildMenuItem(
               text: 'People',
               icon: Icons.people,
             ),
-            Divider(color: Colors.grey),
+            const Divider(color: Colors.grey),
           ],
         ),
       ),
@@ -42,25 +44,25 @@ class NavigationDrawerWidget extends StatelessWidget {
       InkWell(
         onTap: onClicked,
         child: Container(
-          padding: padding.add(EdgeInsets.symmetric(vertical: 20)),
+          padding: padding.add(const EdgeInsets.symmetric(vertical: 20)),
           child: Row(
             children: [
               CircleAvatar(
                 radius: 20,
                 backgroundImage: NetworkImage(urlImage),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(name,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 15,
                       color: Colors.white,
                     )),
                 const SizedBox(height: 4),
                 Text(church,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 11,
                       color: Colors.white,
                     )),
