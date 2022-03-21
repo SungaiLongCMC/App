@@ -58,8 +58,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(30.0),
+                                    borderRadius: BorderRadius.circular(30.0),
                                   ),
                                 ),
                                 icon: Icon(
@@ -122,32 +121,32 @@ class _PeopleScreenState extends State<PeopleScreen> {
                                   return [
                                     const PopupMenuItem<int>(
                                         enabled: false,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "SORT BY", selected: false)),
                                     CheckedPopupMenuItem(
                                         value: 1,
                                         checked: boolSortBy,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "First Name",
                                             selected: boolSortBy)),
                                     PopupMenuItem<int>(
                                         value: 2,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "Last Name",
                                             selected: !boolSortBy)),
                                     const PopupMenuItem<int>(
                                         enabled: false,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "SORT DIRECTION",
                                             selected: false)),
                                     PopupMenuItem<int>(
                                         value: 3,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "A-Z",
                                             selected: boolSortDirection)),
                                     PopupMenuItem<int>(
                                         value: 4,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "Z-A",
                                             selected: !boolSortDirection)),
                                   ];
@@ -278,8 +277,8 @@ customRefreshBuilder() => (context, child, controller) {
       );
     };
 
-class itemMenu extends StatelessWidget {
-  const itemMenu({
+class ItemMenu extends StatelessWidget {
+  const ItemMenu({
     Key? key,
     required this.text,
     required this.selected,
@@ -292,16 +291,16 @@ class itemMenu extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-    if (selected)
-      Icon(
-        Icons.check,
-        size: 20,
-        color: kPrimaryColor,
-      ),
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Text(text),
-    ),
+        if (selected)
+          Icon(
+            Icons.check,
+            size: 20,
+            color: kPrimaryColor,
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Text(text),
+        ),
       ],
     );
   }

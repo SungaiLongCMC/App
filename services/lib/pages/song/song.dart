@@ -25,6 +25,8 @@ class _SongScreenState extends State<SongScreen> {
     setState(() => this.data = data);
   }
 
+  _onSelect(value) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,8 +60,7 @@ class _SongScreenState extends State<SongScreen> {
                                 onPressed: () {},
                                 style: ElevatedButton.styleFrom(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(30.0),
+                                    borderRadius: BorderRadius.circular(30.0),
                                   ),
                                 ),
                                 icon: Icon(
@@ -107,43 +108,42 @@ class _SongScreenState extends State<SongScreen> {
                                 ),
                                 itemBuilder: (context) {
                                   return [
-                                    const PopupMenuItem<int>(
+                                    const PopupItem(
                                         enabled: false,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "SORT BY", selected: false)),
-                                    CheckedPopupMenuItem(
+                                    PopupItem(
                                         value: 1,
-                                        checked: boolSortBy,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "Title",
                                             selected: boolSortBy)),
-                                    PopupMenuItem<int>(
+                                    PopupItem(
                                         value: 2,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "Last Scheduled",
                                             selected: !boolSortBy)),
-                                    const PopupMenuItem<int>(
+                                    const PopupItem(
                                         enabled: false,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "SORT DIRECTION",
                                             selected: false)),
-                                    PopupMenuItem<int>(
+                                    PopupItem(
                                         value: 3,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "Ascending",
                                             selected: boolSortDirection)),
-                                    PopupMenuItem<int>(
+                                    PopupItem(
                                         value: 4,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "Descending",
                                             selected: !boolSortDirection)),
-                                    const PopupMenuItem<int>(
+                                    const PopupItem(
                                         enabled: false,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "VIEW", selected: false)),
-                                    PopupMenuItem<int>(
+                                    PopupItem(
                                         value: 5,
-                                        child: itemMenu(
+                                        child: ItemMenu(
                                             text: "Last Scheduled Date",
                                             selected: boolView)),
                                   ];
@@ -154,8 +154,8 @@ class _SongScreenState extends State<SongScreen> {
                                       setState(() {
                                         boolSortBy = true;
                                       });
-                                      dynamic state = _menuKey.currentState;
-                                      state.showButtonMenu();
+                                      // dynamic state = _menuKey.currentState;
+                                      // state.showButtonMenu();
                                       break;
                                     case 2:
                                       setState(() {
@@ -163,29 +163,29 @@ class _SongScreenState extends State<SongScreen> {
                                         boolSortDirection = false;
                                         boolView = true;
                                       });
-                                      dynamic state = _menuKey.currentState;
-                                      state.showButtonMenu();
+                                      // dynamic state = _menuKey.currentState;
+                                      // state.showButtonMenu();
                                       break;
                                     case 3:
                                       setState(() {
                                         boolSortDirection = true;
                                       });
-                                      dynamic state = _menuKey.currentState;
-                                      state.showButtonMenu();
+                                      // dynamic state = _menuKey.currentState;
+                                      // state.showButtonMenu();
                                       break;
                                     case 4:
                                       setState(() {
                                         boolSortDirection = false;
                                       });
-                                      dynamic state = _menuKey.currentState;
-                                      state.showButtonMenu();
+                                      // dynamic state = _menuKey.currentState;
+                                      // state.showButtonMenu();
                                       break;
                                     case 5:
                                       setState(() {
                                         boolView = !boolView;
                                       });
-                                      dynamic state = _menuKey.currentState;
-                                      state.showButtonMenu();
+                                      // dynamic state = _menuKey.currentState;
+                                      // state.showButtonMenu();
                                       break;
                                     default:
                                   }
@@ -274,8 +274,8 @@ customRefreshBuilder() => (context, child, controller) {
       );
     };
 
-class itemMenu extends StatelessWidget {
-  const itemMenu({
+class ItemMenu extends StatelessWidget {
+  const ItemMenu({
     Key? key,
     required this.text,
     required this.selected,
@@ -288,17 +288,42 @@ class itemMenu extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-    if (selected)
-      Icon(
-        Icons.check,
-        size: 20,
-        color: kPrimaryColor,
-      ),
-    Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-      child: Text(text),
-    ),
+        if (selected)
+          Icon(
+            Icons.check,
+            size: 20,
+            color: kPrimaryColor,
+          ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+          child: Text(text),
+        ),
       ],
     );
+  }
+}
+
+class PopupItem extends PopupMenuItem {
+  const PopupItem({
+    required Widget child,
+    bool enabled = true,
+    int? value,
+    Key? key,
+  }) : super(key: key, child: child, enabled: enabled, value: value);
+
+  @override
+  _PopupItemState createState() => _PopupItemState();
+}
+
+class _PopupItemState extends PopupMenuItemState {
+  @override
+  void handleTap() {
+    widget.onTap?.call();
+    // widget.onSelected();
+
+    // Navigator.of(context).pop(widget.value);
+    // print(Navigator.of(context));
+    // this.onSelect!(widget.value);
+    // print(this.onSelect!(widget.value));
   }
 }

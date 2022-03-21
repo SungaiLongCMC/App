@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:services/config/route_name.dart';
+import 'package:services/pages/error/error.dart';
+import 'package:services/pages/media/media.dart';
 import 'package:services/pages/people/people.dart';
+import 'package:services/pages/plans/plans.dart';
 import 'package:services/pages/profile/profile.dart';
+import 'package:services/pages/schedule/schedule.dart';
 import 'package:services/pages/song/song.dart';
 import 'package:services/widgets/navigation_drawer_widget.dart';
+
+GlobalKey<NavigatorState> _pageNavigatorKey = GlobalKey<NavigatorState>();
 
 Widget buildAppBarActions({
   required VoidCallback onTap,
@@ -23,7 +30,40 @@ class AppScreen extends StatefulWidget {
 }
 
 class _AppScreenState extends State<AppScreen> {
-  int index = 2;
+  int _index = 0;
+  int _currentIndex = 0;
+  final PageController _pageController = PageController();
+
+  @override
+  void initState() {
+    _pageController.addListener(_handlePageChange);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.removeListener(_handlePageChange);
+    super.dispose();
+  }
+
+  void _handlePageChange() {
+    final newIndex = _pageController.page!.round();
+
+    if (_currentIndex != newIndex) {
+      setState(() {
+        _currentIndex = newIndex;
+      });
+
+      // final hn = context.read<HackerNewsNotifier>();
+      // final tabs = hn.tabs;
+      // final current = tabs[_currentIndex];
+
+      // if (current.articles.isEmpty && !current.isLoading) {
+      //   // New tab with no data. Let's fetch some.
+      //   current.refresh();
+      // }
+    }
+  }
 
   final appBarTitle = [
     "My Schedule",
@@ -57,7 +97,7 @@ class _AppScreenState extends State<AppScreen> {
     return Scaffold(
       drawer: NavigationDrawerWidget(),
       appBar: AppBar(
-        title: Text(appBarTitle[index]),
+        title: Text(appBarTitle[_index]),
         // leading: GestureDetector(
         //     onTap: () {},
         //     child: Icon(
@@ -66,7 +106,7 @@ class _AppScreenState extends State<AppScreen> {
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
-            child: appBarActions[index],
+            child: appBarActions[_index],
           ),
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
@@ -80,16 +120,65 @@ class _AppScreenState extends State<AppScreen> {
           ),
         ],
       ),
-      body: screens[index],
+      body: Navigator(
+        initialRoute: '/schedule',
+        reportsRouteUpdateToEngine: true,
+        key: _pageNavigatorKey,
+        onGenerateRoute: (RouteSettings settings) {
+          late Widget page;
+          if (settings.name!.startsWith(scheduleRoute)) {
+            page = const ScheduleScreen();
+          } else if (settings.name!.startsWith(planRoute)) {
+            page = const PlansScreen();
+          } else if (settings.name!.startsWith(songsRoute)) {
+            page = SongScreen();
+          } else if (settings.name!.startsWith(mediasRoute)) {
+            page = const MediaScreen();
+          } else if (settings.name!.startsWith(peopleRoute)) {
+            page = PeopleScreen();
+          } else {
+            page = const ErrorScreen();
+          }
+          return MaterialPageRoute(
+              settings: settings,
+              builder: (context) {
+                return page;
+              });
+        },
+      ),
+      // body: NestedScreen(navigatorKey: _navigatorKey()),
       bottomNavigationBar: BottomNavigationBar(
         selectedFontSize: 10,
         unselectedFontSize: 10,
-        currentIndex: index,
+        currentIndex: _index,
         onTap: (value) {
+          // if (index != value) {
+          switch (value) {
+            case 0:
+              _pageNavigatorKey.currentState!.pushNamed("/schedule");
+              break;
+            case 1:
+              _pageNavigatorKey.currentState!.pushNamed("/dashboard/0");
+              break;
+            case 2:
+              _pageNavigatorKey.currentState!.pushReplacementNamed(
+                  "/songs?order=title&page=1&per_page=100");
+              break;
+            case 3:
+              _pageNavigatorKey.currentState!.pushReplacementNamed(
+                  "/medias?order=title&page=1&per_page=100");
+              break;
+            case 4:
+              _pageNavigatorKey.currentState!.pushReplacementNamed(
+                  "/people?page=1&order=first_name&team_id%5B%5D=4154826");
+              break;
+          }
           setState(() {
-            index = value;
+            _index = value;
           });
+          // }
         },
+        // onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(
